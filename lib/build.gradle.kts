@@ -23,7 +23,6 @@ protobuf {
     }
 
     plugins {
-        this.
     }
 }
 
