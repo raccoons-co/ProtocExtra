@@ -25,6 +25,9 @@ class JacocoConfiguration private constructor(
         /** Returns new plugin configuration builder. */
         fun newBuilder() = Builder()
 
+        /** Returns default configuration of the Jacoco plugin. */
+        fun defaultInstance(): JacocoConfiguration = newBuilder().build()
+
         /** The configuration builder */
         class Builder {
 

@@ -27,6 +27,9 @@ class CheckstyleConfiguration(
         /** Returns new plugin configuration builder. */
         fun newBuilder() = Builder()
 
+        /** Returns default configuration of the Checkstyle plugin. */
+        fun defaultInstance(): CheckstyleConfiguration = newBuilder().build()
+
         /** The configuration builder */
         class Builder {
 

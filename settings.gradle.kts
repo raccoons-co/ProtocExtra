@@ -10,3 +10,10 @@ include(
     "lib",
     "plugin"
 )
+
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}

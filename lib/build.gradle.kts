@@ -11,18 +11,7 @@ import co.raccoons.gradle.publish.MavenPublishConfiguration
 import co.raccoons.gradle.publish.maven.License
 import co.raccoons.gradle.publish.maven.Pom
 import co.raccoons.gradle.publish.maven.Publication
-import co.raccoons.gradle.test.TestJUnitConfiguration
 import java.time.LocalDateTime
-
-
-plugins {
-    java
-    id("com.google.protobuf") version "0.9.4"
-}
-
-project.tasks.withType(Test::class.java){
-    useJUnitPlatform()
-}
 
 protobuf {
     protoc {
@@ -38,24 +27,18 @@ protobuf {
     }
 }
 
+configure<SourceSetContainer> {
+    this.named("main").configure {
+        this.java.srcDirs(project.layout.projectDirectory.dir("../generated/"))
+    }
+}
+
+
 BuildWorkflow.of(project)
-    .use(Configuration.java())
     .use(Configuration.javaLibrary())
-    .use(Configuration.testJUnit())
     .use(Configuration.mavenPublish())
 
 internal object Configuration {
-
-    fun java(): JavaConfiguration {
-        val manifest = Manifest.newBuilder()
-            .putAttributes("Name", "Abstract Protoc Plugin Library")
-            .putAttributes("Implementation-Title", "co.raccoons.protoc")
-            .putAttributes("Implementation-Vendor", "Raccoons")
-            .putAttributes("Implementation-Build-Date", LocalDateTime.now().toString())
-            .build();
-
-        return JavaConfiguration(manifest)
-    }
 
     fun javaLibrary(): JavaLibraryConfiguration =
         JavaLibraryConfiguration.newBuilder()
@@ -63,15 +46,6 @@ internal object Configuration {
             .addDependency(Implementation("com.google.errorprone","error_prone_core","2.36.0"))
             .addDependency(Implementation("com.google.protobuf","protobuf-java","4.28.3"))
             .build()
-
-    fun testJUnit(): TestJUnitConfiguration =
-        TestJUnitConfiguration.newBuilder()
-            .addDependency(TestImplementation("org.junit.jupiter", "junit-jupiter","5.11.4"))
-            .addDependency(TestImplementation("org.junit.jupiter","junit-jupiter-params","5.11.4"))
-            .addDependency(TestImplementation("com.google.guava","guava-testlib","33.4.0-jre"))
-            .addDependency(TestImplementation("com.google.truth", "truth", "1.4.4"))
-            .build()
-
 
 
     fun mavenPublish(): MavenPublishConfiguration {
@@ -96,11 +70,5 @@ internal object Configuration {
                 .build()
 
         return MavenPublishConfiguration(publication)
-    }
-}
-
-configure<SourceSetContainer> {
-    this.named("main").configure {
-        this.java.srcDirs(project.layout.projectDirectory.dir("../generated/"))
     }
 }

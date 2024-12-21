@@ -1,17 +1,10 @@
 import co.raccoons.gradle.BuildWorkflow
 import co.raccoons.gradle.java.Implementation
-import co.raccoons.gradle.java.JavaConfiguration
 import co.raccoons.gradle.java.JavaLibraryConfiguration
-import co.raccoons.gradle.java.Manifest
 import co.raccoons.gradle.publish.MavenPublishConfiguration
 import co.raccoons.gradle.publish.maven.License
 import co.raccoons.gradle.publish.maven.Pom
 import co.raccoons.gradle.publish.maven.Publication
-import java.time.LocalDateTime
-
-plugins {
-    id("com.google.protobuf") version "0.9.4"
-}
 
 protobuf {
     protoc {
@@ -24,21 +17,10 @@ protobuf {
 }
 
 BuildWorkflow.of(project)
-    .use(Configuration.java())
     .use(Configuration.javaLibrary())
     .use(Configuration.mavenPublish())
 
 internal object Configuration {
-
-    fun java(): JavaConfiguration {
-        val manifest = Manifest.newBuilder()
-            .putAttributes("Name", "Protoc Plugin")
-            .putAttributes("Implementation-Title", "co.raccoons.protoc")
-            .putAttributes("Implementation-Vendor", "Raccoons")
-            .putAttributes("Implementation-Build-Date", LocalDateTime.now().toString())
-            .build();
-        return JavaConfiguration(manifest)
-    }
 
     fun javaLibrary(): JavaLibraryConfiguration =
         JavaLibraryConfiguration.newBuilder()
