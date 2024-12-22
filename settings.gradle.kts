@@ -7,7 +7,7 @@
 rootProject.name = "ProtocExtra"
 
 include(
-    "lib",
+    "api",
     "plugin"
 )
 
@@ -15,5 +15,13 @@ dependencyResolutionManagement {
     repositories {
         mavenLocal()
         mavenCentral()
+    }
+}
+
+pluginManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
     }
 }

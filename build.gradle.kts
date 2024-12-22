@@ -6,8 +6,8 @@
 
 import co.raccoons.gradle.BuildWorkflow
 import co.raccoons.gradle.checkstyle.CheckstyleConfiguration
-import co.raccoons.gradle.java.JavaConfiguration
 import co.raccoons.gradle.jacoco.JacocoConfiguration
+import co.raccoons.gradle.java.JavaConfiguration
 import co.raccoons.gradle.java.Manifest
 import co.raccoons.gradle.java.TestImplementation
 import co.raccoons.gradle.java.Version
@@ -21,7 +21,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":lib"))
+    implementation(project(":api"))
     implementation(project(":plugin"))
 }
 
@@ -31,8 +31,9 @@ subprojects {
     BuildWorkflow.of(project)
         .setGroup("co.raccoons.protoc")
         .setVersion("0.0.9")
+        .setDescription("Protocol buffers compiler extra code generation")
         .use(Version.JAVA.of(11))
-        .use(Configuration.java())
+        .use(Configuration.java(project))
         .use(Configuration.testJUnit())
         .use(JacocoConfiguration.defaultInstance())
         .use(CheckstyleConfiguration.defaultInstance())
@@ -40,15 +41,17 @@ subprojects {
 
 internal object Configuration {
 
-    fun java(): JavaConfiguration {
-        val manifest = Manifest.newBuilder()
-            .putAttributes("Name", "Protoc Extra")
-            .putAttributes("Implementation-Title", "co.raccoons.protoc")
-            .putAttributes("Implementation-Vendor", "Raccoons")
-            .putAttributes("Implementation-Build-Date", LocalDateTime.now().toString())
+    fun java(project: Project): JavaConfiguration =
+        JavaConfiguration.newBuilder()
+            .addManifest(
+                Manifest.newBuilder()
+                    .putAttributes("Implementation-Title", project.description)
+                    .putAttributes("Implementation-Version", project.version.toString())
+                    .putAttributes("Implementation-Vendor", "Raccoons")
+                    .putAttributes("Implementation-Build-Date", LocalDateTime.now().toString())
+                    .build()
+            )
             .build()
-        return JavaConfiguration(manifest)
-    }
 
     fun testJUnit(): TestJUnitConfiguration =
         TestJUnitConfiguration.newBuilder()

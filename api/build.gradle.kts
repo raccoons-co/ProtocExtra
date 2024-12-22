@@ -5,47 +5,50 @@
  */
 
 import co.raccoons.gradle.BuildWorkflow
-import co.raccoons.gradle.java.*
+import co.raccoons.gradle.java.JavaConfiguration
 import co.raccoons.gradle.java.Manifest
 import co.raccoons.gradle.publish.MavenPublishConfiguration
 import co.raccoons.gradle.publish.maven.License
 import co.raccoons.gradle.publish.maven.Pom
 import co.raccoons.gradle.publish.maven.Publication
-import java.time.LocalDateTime
+import com.google.protobuf.gradle.id
+
+dependencies {
+    implementation("com.google.protobuf:protobuf-java:4.28.3")
+    implementation("com.google.guava:guava:33.4.0-jre")
+    implementation("com.google.errorprone:error_prone_core:2.36.0")
+}
 
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.25.5"
     }
-
-    generateProtoTasks {
-        ofSourceSet("main")
-    }
-
     plugins {
+        id("extra") {
+            path = "util/plugin.sh"
+        }
+    }
+    generateProtoTasks {
+        ofSourceSet("main").forEach {
+            it.plugins {
+                id("extra") {
+                    outputSubDir = "java"
+                }
+            }
+        }
     }
 }
 
-configure<SourceSetContainer> {
-    this.named("main").configure {
-        this.java.srcDirs(project.layout.projectDirectory.dir("../generated/"))
+tasks.jar {
+    manifest {
+        attributes(mapOf("Name" to "co/raccoons/protoc/protoc-extra-api"))
     }
 }
-
 
 BuildWorkflow.of(project)
-    .use(Configuration.javaLibrary())
     .use(Configuration.mavenPublish())
 
 internal object Configuration {
-
-    fun javaLibrary(): JavaLibraryConfiguration =
-        JavaLibraryConfiguration.newBuilder()
-            .addDependency(Implementation("com.google.guava","guava","33.4.0-jre"))
-            .addDependency(Implementation("com.google.errorprone","error_prone_core","2.36.0"))
-            .addDependency(Implementation("com.google.protobuf","protobuf-java","4.28.3"))
-            .build()
-
 
     fun mavenPublish(): MavenPublishConfiguration {
         val license =
@@ -64,7 +67,7 @@ internal object Configuration {
 
         val publication =
             Publication.newBuilder()
-                .setArtifactId("protoc-extra-lib")
+                .setArtifactId("protoc-extra-api")
                 .setPom(pom)
                 .build()
 
