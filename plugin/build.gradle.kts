@@ -1,5 +1,5 @@
 dependencies {
-    implementation("co.raccoons.protoc:protoc-extra-api:0.0.9")
+    implementation("co.raccoons.protoc:protoc-extra-api:0.0.10")
 }
 
 protobuf {
