@@ -4,19 +4,16 @@
  * @license MIT
  */
 
-import co.raccoons.gradle.BuildWorkflow
-import co.raccoons.gradle.java.JavaConfiguration
-import co.raccoons.gradle.java.Manifest
-import co.raccoons.gradle.publish.MavenPublishConfiguration
-import co.raccoons.gradle.publish.maven.License
-import co.raccoons.gradle.publish.maven.Pom
-import co.raccoons.gradle.publish.maven.Publication
 import com.google.protobuf.gradle.id
+import java.time.LocalDateTime
 
-dependencies {
-    implementation("com.google.protobuf:protobuf-java:4.28.3")
-    implementation("com.google.guava:guava:33.4.0-jre")
-    implementation("com.google.errorprone:error_prone_core:2.36.0")
+plugins {
+    `maven-publish`
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 protobuf {
@@ -39,38 +36,36 @@ protobuf {
     }
 }
 
-tasks.jar {
-    manifest {
-        attributes(mapOf("Name" to "co/raccoons/protoc/protoc-extra-api"))
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifactId = "protoc-extra-api"
+            from(components.getByName("java"))
+            pom {
+                name.set("Protoc Plugin Library")
+                description.set("Abstract Protobuf Compiler Plugin API")
+                url.set("https://github.com/raccoons-co/ProtocExtra")
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/license/mit")
+                    }
+                }
+            }
+        }
     }
 }
 
-BuildWorkflow.of(project)
-    .use(Configuration.mavenPublish())
-
-internal object Configuration {
-
-    fun mavenPublish(): MavenPublishConfiguration {
-        val license =
-            License.newBuilder()
-                .setName("ProtocExtra")
-                .setUrl("https://opensource.org/license/mit")
-                .build()
-
-        val pom =
-            Pom.newBuilder()
-                .setName("ProtocExtra")
-                .setDescription("Abstract Protoc Plugin Library")
-                .setUrl("https://github.com/raccoons-co/ProtocExtra")
-                .setLicense(license)
-                .build()
-
-        val publication =
-            Publication.newBuilder()
-                .setArtifactId("protoc-extra-api")
-                .setPom(pom)
-                .build()
-
-        return MavenPublishConfiguration(publication)
+tasks.jar {
+    manifest {
+        attributes(
+            mapOf(
+                "Name" to "co/raccoons/protoc/protoc-extra-api",
+                "Implementation-Version" to project.version.toString(),
+                "Implementation-Title" to "Protocol Buffers Compiler Plugin Library",
+                "Implementation-Vendor" to "Raccoons",
+                "Implementation-Build-Date" to LocalDateTime.now().toString()
+            )
+        )
     }
 }

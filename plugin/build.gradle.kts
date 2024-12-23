@@ -1,7 +1,5 @@
 dependencies {
     implementation("co.raccoons.protoc:protoc-extra-api:0.0.9")
-    implementation("com.google.guava:guava:33.4.0-jre")
-    implementation("com.google.protobuf:protobuf-java:4.28.3")
 }
 
 protobuf {
@@ -22,7 +20,7 @@ tasks.jar {
             if (it.isDirectory) it else zipTree(it)
         }
     )
-    archiveExtension.set("exe")
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     exclude("google/**")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveExtension.set("exe")
 }

@@ -4,19 +4,11 @@
  * @license MIT
  */
 
-import co.raccoons.gradle.BuildWorkflow
-import co.raccoons.gradle.checkstyle.CheckstyleConfiguration
-import co.raccoons.gradle.jacoco.JacocoConfiguration
-import co.raccoons.gradle.java.JavaConfiguration
-import co.raccoons.gradle.java.Manifest
-import co.raccoons.gradle.java.TestImplementation
-import co.raccoons.gradle.java.Version
-import co.raccoons.gradle.test.TestJUnitConfiguration
-import java.time.LocalDateTime
-
 plugins {
     java
     id("com.google.protobuf") version "0.9.4"
+    checkstyle
+    jacoco
     id("jacoco-report-aggregation")
 }
 
@@ -25,39 +17,42 @@ dependencies {
     implementation(project(":plugin"))
 }
 
-subprojects {
-    apply(plugin = "com.google.protobuf")
-
-    BuildWorkflow.of(project)
-        .setGroup("co.raccoons.protoc")
-        .setVersion("0.0.9")
-        .setDescription("Protocol buffers compiler extra code generation")
-        .use(Version.JAVA.of(11))
-        .use(Configuration.java(project))
-        .use(Configuration.testJUnit())
-        .use(JacocoConfiguration.defaultInstance())
-        .use(CheckstyleConfiguration.defaultInstance())
+checkstyle {
+    toolVersion = "10.12.4"
 }
 
-internal object Configuration {
+subprojects {
+    group = "co.raccoons.protoc"
+    version = "0.0.10"
 
-    fun java(project: Project): JavaConfiguration =
-        JavaConfiguration.newBuilder()
-            .addManifest(
-                Manifest.newBuilder()
-                    .putAttributes("Implementation-Title", project.description)
-                    .putAttributes("Implementation-Version", project.version.toString())
-                    .putAttributes("Implementation-Vendor", "Raccoons")
-                    .putAttributes("Implementation-Build-Date", LocalDateTime.now().toString())
-                    .build()
-            )
-            .build()
+    setOf(
+        "java",
+        "com.google.protobuf",
+        "checkstyle",
+        "jacoco"
+    ).forEach { apply(plugin = it) }
 
-    fun testJUnit(): TestJUnitConfiguration =
-        TestJUnitConfiguration.newBuilder()
-            .addDependency(TestImplementation("org.junit.jupiter", "junit-jupiter","5.11.4"))
-            .addDependency(TestImplementation("org.junit.jupiter","junit-jupiter-params","5.11.4"))
-            .addDependency(TestImplementation("com.google.guava","guava-testlib","33.4.0-jre"))
-            .addDependency(TestImplementation("com.google.truth", "truth", "1.4.4"))
-            .build()
+    dependencies {
+        setOf(
+            "com.google.protobuf:protobuf-java:4.28.3",
+            "com.google.guava:guava:33.4.0-jre",
+        ).forEach { implementation(it) }
+
+        setOf(
+            "org.junit.jupiter:junit-jupiter:5.11.4",
+            "org.junit.jupiter:junit-jupiter-params:5.11.4",
+            "com.google.guava:guava-testlib:33.4.0-jre",
+            "com.google.truth:truth:1.4.4"
+        ).forEach { testImplementation(it) }
+    }
+
+    tasks {
+        test {
+            useJUnitPlatform()
+            finalizedBy(jacocoTestReport)
+        }
+        jacocoTestReport {
+            dependsOn(test)
+        }
+    }
 }
