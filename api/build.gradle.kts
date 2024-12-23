@@ -11,11 +11,6 @@ plugins {
     `maven-publish`
 }
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.25.5"
@@ -54,6 +49,11 @@ publishing {
             }
         }
     }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 tasks.jar {
