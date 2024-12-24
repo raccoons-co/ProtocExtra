@@ -7,8 +7,8 @@ EXECUTABLE_PLUGIN = ./plugin.sh
 .PHONY: proto
 proto: clean
 proto: $(GENERATED_OUT_DIR)
-proto: COMMON_PROTO_PATH=$(BASE_DIR)/src/main/proto
-proto: DEV_PROTO_PATH=$(BASE_DIR)/src/dev/proto
+proto: COMMON_PROTO_PATH=$(BASE_DIR)/lib/src/main/proto
+proto: DEV_PROTO_PATH=$(BASE_DIR)/lib/src/dev/proto
 proto:
 	protoc \
 		--java_out=$(GENERATED_OUT_DIR) \

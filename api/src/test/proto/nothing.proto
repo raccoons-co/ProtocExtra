@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package raccoons.example;
+
+option java_package = "co.raccoons.example";
+option java_multiple_files = true;
+
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
+
+message Nothing {
+  string name = 1;
+  google.protobuf.Any some = 2;
+  google.protobuf.Empty var = 3;
+
+  message Else {
+    string name = 1;
+
+    enum ElseEnum {
+      SOME = 0;
+    }
+
+    message Matters {
+      string name = 1 ;
+
+      enum MattersEnum{
+        SOME =0;
+      }
+    }
+  }
+
+  enum NothingEnum {
+    SOME = 0;
+  }
+}
+
+message Another{
+  string name = 1 ;
+}
+
+enum TopLevelEnum {
+  SOME = 0;
+}
+
+service TopLevelService {
+  rpc Search(Nothing) returns (Another) {}
+}
+

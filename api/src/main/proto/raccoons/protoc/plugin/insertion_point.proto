@@ -1,0 +1,19 @@
+// Copyright 2024, Raccoons. Developing simple way to change.
+//
+// @license MIT
+
+syntax = "proto3";
+
+package raccoons.protoc.extra;
+
+option java_package = "co.raccoons.protoc.plugin";
+option java_outer_classname = "InsertionPointProto";
+option java_multiple_files = true;
+
+// Describes an insertion point.
+message InsertionPoint {
+  // A java file name, relative to the output directory.
+  string file_name = 1;
+  // Definition of insertion point for a Protobuf type.
+  string identifier = 2;
+}
