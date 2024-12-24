@@ -1,5 +1,5 @@
 dependencies {
-    implementation("co.raccoons.protoc:protoc-extra-api:0.0.10")
+    implementation("co.raccoons.protoc:protoc-extra-api:0.0.11")
 }
 
 protobuf {
@@ -21,6 +21,6 @@ tasks.jar {
         }
     )
     exclude("google/**")
+    archiveClassifier.set("exe")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveExtension.set("exe")
 }
