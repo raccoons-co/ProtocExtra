@@ -13,6 +13,7 @@ import com.google.protobuf.Descriptors.EnumDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -180,7 +181,8 @@ interface JavaName {
         }
 
         private static String capitalize(String value) {
-            return value.substring(0, 1).toUpperCase() + value.substring(1);
+            return value.substring(0, 1).toUpperCase(Locale.getDefault())
+                    + value.substring(1);
         }
     }
 }
