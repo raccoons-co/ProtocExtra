@@ -12,12 +12,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-          cache: maven
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
       - run: ./gradlew :api:build
       - run: ./gradlew :api:publishToMavenLocal
       - run: ./gradlew :plugin:build
+      - run: ./gradlew testCodeCoverageReport && ls build/reports
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         env:

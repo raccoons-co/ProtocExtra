@@ -65,7 +65,3 @@ subprojects {
         }
     }
 }
-
-tasks.check {
-    dependsOn(tasks.named<JacocoReport>("testCodeCoverageReport"))
-}
