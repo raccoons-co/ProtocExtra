@@ -87,6 +87,7 @@ class ProtocolFileTest {
         assertThat(protocolFile.enumFileName(enumType)).isEqualTo(expected);
     }
 
+    @SuppressWarnings("UnusedMethod")
     private static Stream<Arguments> outerClassFileName() {
         return Stream.of(
                 Arguments.of("co/raccoons/example/NothingOuterClass.java", Nothing.getDescriptor()),
@@ -97,6 +98,7 @@ class ProtocolFileTest {
         );
     }
 
+    @SuppressWarnings("UnusedMethod")
     private static Stream<Arguments> orBuilderFileName() {
         return Stream.of(
                 Arguments.of("co/raccoons/example/UserInfoOrBuilder.java", UserInfo.getDescriptor()),
@@ -109,6 +111,7 @@ class ProtocolFileTest {
         );
     }
 
+    @SuppressWarnings("UnusedMethod")
     private static Stream<Arguments> messageFileName() {
         return Stream.of(
                 Arguments.of("co/raccoons/example/Nothing.java", Nothing.getDescriptor()),
@@ -121,6 +124,7 @@ class ProtocolFileTest {
         );
     }
 
+    @SuppressWarnings("UnusedMethod")
     private static Stream<Arguments> enumFileName() {
         return Stream.of(
                 Arguments.of("co/raccoons/example/TopLevelEnum.java", TopLevelEnum.getDescriptor()),

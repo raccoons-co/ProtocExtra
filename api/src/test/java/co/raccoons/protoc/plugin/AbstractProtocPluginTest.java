@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static com.google.common.truth.Truth.assertThat;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("checkstyle:multiplestringliterals")
@@ -49,15 +50,15 @@ class AbstractProtocPluginTest {
             }
         }.integrate();
 
-        assertThat(outputStream.toString().contains("ExampleMessage.java")).isTrue();
-        assertThat(outputStream.toString().contains("message_implements:")).isTrue();
-        assertThat(outputStream.toString().contains("co.raccoons.event.Observable,")).isTrue();
+        assertThat(outputStream.toString(UTF_8).contains("ExampleMessage.java")).isTrue();
+        assertThat(outputStream.toString(UTF_8).contains("message_implements:")).isTrue();
+        assertThat(outputStream.toString(UTF_8).contains("co.raccoons.event.Observable,")).isTrue();
     }
 
     @Test
     @DisplayName("tries to read stdin")
     void readsFromSystemIn() {
-        System.setIn(new ByteArrayInputStream("test".getBytes()));
+        System.setIn(new ByteArrayInputStream("test".getBytes(UTF_8)));
         var exception =
                 assertThrows(IllegalStateException.class,
                         () ->

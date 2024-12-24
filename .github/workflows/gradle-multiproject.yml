@@ -17,7 +17,7 @@ jobs:
       - run: ./gradlew :api:build
       - run: ./gradlew :api:publishToMavenLocal
       - run: ./gradlew :plugin:build
-      - run: ./gradlew testCodeCoverageReport && ls build/reports
+      - run: ./gradlew jacocoTestReport
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         env:

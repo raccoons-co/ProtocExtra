@@ -57,15 +57,13 @@ java {
 }
 
 tasks.jar {
-    manifest {
-        attributes(
-            mapOf(
-                "Name" to "co/raccoons/protoc/protoc-extra-api",
-                "Implementation-Version" to project.version.toString(),
-                "Implementation-Title" to "Protocol Buffers Compiler Plugin Library",
-                "Implementation-Vendor" to "Raccoons",
-                "Implementation-Build-Date" to LocalDateTime.now().toString()
-            )
+    manifest.attributes(
+        mapOf(
+            "Name" to "co/raccoons/protoc/protoc-extra-api",
+            "Implementation-Version" to project.version.toString(),
+            "Implementation-Title" to "Protocol Buffers Compiler Plugin Library",
+            "Implementation-Vendor" to "Raccoons",
+            "Implementation-Build-Date" to LocalDateTime.now().toString()
         )
-    }
+    )
 }

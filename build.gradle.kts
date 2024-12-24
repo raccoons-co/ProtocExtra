@@ -53,9 +53,6 @@ subprojects {
     }
 
     tasks {
-        compileJava{
-            options.errorprone.excludedPaths.set(".*/build/generated/.*")
-        }
         test {
             useJUnitPlatform()
             finalizedBy(jacocoTestReport)
@@ -63,5 +60,26 @@ subprojects {
         jacocoTestReport {
             dependsOn(test)
         }
+        // Handles exclusion for compileJava and compileTestJava task containers at once.
+        withType(JavaCompile::class.java) {
+            options.errorprone.excludedPaths.set(".*/build/generated/.*")
+        }
+    }
+}
+
+// Builds aggregated coverage repost for upload to Codecov.
+tasks.jacocoTestReport {
+    executionData(
+        fileTree(project.rootDir.absolutePath)
+            .include("**/build/jacoco/*.exec")
+    )
+    subprojects.forEach {
+        sourceSets(it.sourceSets.main.get())
+        dependsOn(it.tasks.test)
+    }
+    reports {
+        xml.required.set(true)
+        html.required.set(false)
+        csv.required.set(false)
     }
 }
