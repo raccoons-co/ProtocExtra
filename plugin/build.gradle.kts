@@ -12,9 +12,9 @@ protobuf {
 }
 
 tasks.jar {
-    manifest {
-        attributes(mapOf("Main-Class" to "co.raccoons.protoc.extra.Plugin"))
-    }
+    manifest.attributes(
+        mapOf("Main-Class" to "co.raccoons.protoc.extra.Plugin")
+    )
     from(
         configurations.runtimeClasspath.get().map {
             if (it.isDirectory) it else zipTree(it)

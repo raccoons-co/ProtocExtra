@@ -4,17 +4,20 @@
  * @license MIT
  */
 
+import net.ltgt.gradle.errorprone.errorprone
+
 plugins {
     java
     id("com.google.protobuf") version "0.9.4"
+    id("net.ltgt.errorprone") version "4.1.0"
     checkstyle
     jacoco
     id("jacoco-report-aggregation")
 }
 
 dependencies {
-    implementation(project(":api"))
-    implementation(project(":plugin"))
+    jacocoAggregation(project(":api"))
+    jacocoAggregation(project(":plugin"))
 }
 
 checkstyle {
@@ -28,6 +31,7 @@ subprojects {
     setOf(
         "java",
         "com.google.protobuf",
+        "net.ltgt.errorprone",
         "checkstyle",
         "jacoco"
     ).forEach { apply(plugin = it) }
@@ -44,6 +48,8 @@ subprojects {
             "com.google.guava:guava-testlib:33.4.0-jre",
             "com.google.truth:truth:1.4.4"
         ).forEach { testImplementation(it) }
+
+        errorprone("com.google.errorprone:error_prone_core:2.31.0")
     }
 
     tasks {
@@ -54,5 +60,26 @@ subprojects {
         jacocoTestReport {
             dependsOn(test)
         }
+        // Handles exclusion for compileJava and compileTestJava task containers at once.
+        withType(JavaCompile::class.java) {
+            options.errorprone.excludedPaths.set(".*/build/generated/.*")
+        }
+    }
+}
+
+// Builds aggregated coverage repost for upload to Codecov.
+tasks.jacocoTestReport {
+    executionData(
+        fileTree(project.rootDir.absolutePath)
+            .include("**/build/jacoco/*.exec")
+    )
+    subprojects.forEach {
+        sourceSets(it.sourceSets.main.get())
+        dependsOn(it.tasks.test)
+    }
+    reports {
+        xml.required.set(true)
+        html.required.set(false)
+        csv.required.set(false)
     }
 }
