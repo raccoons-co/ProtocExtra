@@ -5,11 +5,16 @@
 
 # Developing Java Protobuf Compiler Plugin
 
+Let's simplify creation of Protocol Buffers Compiler Plugin:
+
+1. Implement `AbstractProtocPlugin`.
+2. Implement `AbstractCodeGenerator`.
+3. Apply Plugin Executable with *Gradle* or *protoc* cli.
+
 ### Abstract Protoc Plugin
 ___
 
-Let's simplify creation of Protobuf Compiler Plugin with using the
-`AbstractProtocPlugin`. This class has skeletal implementation to handle
+The `AbstractProtocPlugin` class has skeletal implementation to handle
 plugins' standard input and output streams.
 
 To introduce a concrete plugin the programmer must extend `AbstractProtocPlugin`

@@ -9,6 +9,7 @@ import java.time.LocalDateTime
 
 plugins {
     `maven-publish`
+    signing
 }
 
 protobuf {
@@ -37,8 +38,9 @@ publishing {
             artifactId = "protoc-extra-api"
             from(components.getByName("java"))
             pom {
-                name.set("Protoc Plugin Library")
-                description.set("Abstract Protobuf Compiler Plugin API")
+                name.set("${project.group}:${artifactId}")
+                description.set("The library that simplifies developing " +
+                        "of Protocol Buffers Compiler Plugin")
                 url.set("https://github.com/raccoons-co/ProtocExtra")
                 licenses {
                     license {
@@ -46,16 +48,29 @@ publishing {
                         url.set("https://opensource.org/license/mit")
                     }
                 }
+                developers {
+                    developer {
+                        organization.set("Raccoons")
+                        organizationUrl.set("https://github.com/raccoons-co/")
+                        name.set("iselo")
+                        email.set("iselo+maven@raccoons.co")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com/raccoons-co/ProtocExtra.git")
+                    developerConnection.set("scm:git:ssh://github.com:raccoons-co/ProtocExtra.git")
+                    url.set("https://github.com/raccoons-co/ProtocExtra/tree/master")
+                }
             }
         }
     }
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/raccoons-co/ProtocExtra")
+            name = "OSSRH"
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
             }
         }
     }
@@ -64,6 +79,12 @@ publishing {
 java {
     withJavadocJar()
     withSourcesJar()
+}
+
+signing {
+    useGpgCmd()
+    sign(publishing.publications.getByName("mavenJava"))
+//    sign(configurations.runtimeElements.get())
 }
 
 tasks.jar {
