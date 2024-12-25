@@ -1,6 +1,7 @@
-[![GitHub Actions](https://github.com/raccoons-co/ProtocExtra/actions/workflows/gradle-multiproject.yml/badge.svg)](https://github.com/raccoons-co/jru-telegrambot/actions)
-[![codecov](https://codecov.io/gh/raccoons-co/ProtocExtra/graph/badge.svg?token=y9xaNeJ4Lz)](https://codecov.io/gh/raccoons-co/abstract-protobuf-plugin)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=raccoons-co_ProtocExtra&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=raccoons-co_abstract-protobuf-plugin)
+[![GitHub Actions](https://github.com/raccoons-co/ProtocExtra/actions/workflows/gradle-build-multiproject.yml/badge.svg)](https://github.com/raccoons-co/ProtocExtra/actions)
+[![codecov](https://codecov.io/gh/raccoons-co/ProtocExtra/graph/badge.svg?token=y9xaNeJ4Lz)](https://codecov.io/gh/raccoons-co/ProtocExtra)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=raccoons-co_ProtocExtra&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=raccoons-co_ProtocExtra)
+[![GitHub Actions](https://github.com/raccoons-co/ProtocExtra/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/raccoons-co/ProtocExtra/actions)
 
 # Developing Java Protobuf Compiler Plugin
 

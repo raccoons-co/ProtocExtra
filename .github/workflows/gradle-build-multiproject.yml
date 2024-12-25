@@ -1,7 +1,8 @@
-name: JDK11, Gradle
+name: Build
 on: [push, pull_request]
 jobs:
   build:
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
