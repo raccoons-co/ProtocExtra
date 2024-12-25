@@ -128,16 +128,38 @@ the initial file and the one which inserts into it must both run as part of
 a single invocation of protoc. Code generators are executed in the order in 
 which they appear on the command line.
 
-The example of usage in the `Makefile` is given below:
-
+The examples of usage are given below:
+~~~ Kotlin
+// gradle.build.kts
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.25.5"
+    }
+    plugins {
+        id("extra") {
+            path = "util/plugin.sh"
+        }
+    }
+    generateProtoTasks {
+        ofSourceSet("main").forEach {
+            it.plugins {
+                id("extra") {
+                    outputSubDir = "java"
+                }
+            }
+        }
+    }
+}
+~~~
 ~~~ Makefile
+# Makefile
 proto: clean $(GENERATED_OUT_DIR)
 proto: PROTO_PATH = ./src/main/proto
 proto:
     protoc \
         --java_out=$(GENERATED_OUT_DIR) \
-        --plugin=protoc-gen-example=./plugin.sh \
-        --example_out=$(GENERATED_OUT_DIR) \
+        --plugin=protoc-gen-extra=./util/plugin.sh \
+        --extra_out=$(GENERATED_OUT_DIR) \
         --proto_path=$(PROTO_PATH) \
         $(wildcard $(PROTO_PATH)/*.proto)
 ~~~
