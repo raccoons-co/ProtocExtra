@@ -39,7 +39,8 @@ publishing {
             from(components.getByName("java"))
             pom {
                 name.set("${project.group}:${artifactId}")
-                description.set("The library that simplifies developing " +
+                description.set(
+                    "The library that simplifies developing " +
                             "of Protocol Buffers Compiler Plugin"
                 )
                 url.set("https://github.com/raccoons-co/ProtocExtra")
@@ -83,10 +84,13 @@ java {
 }
 
 signing {
-    useGpgCmd()
-    sign(publishing.publications["mavenJava"])
-//    sign(publishing.publications.getByName("mavenJava"))
-//    sign(configurations.runtimeElements.get())
+    val gpgPrivateKey: String? = System.getenv("GPG_PRIVATE_KEY")
+    val gpgPassphrase: String? = System.getenv("GPG_PASSPHRASE")
+    if (gpgPrivateKey != null && gpgPassphrase != null) {
+        val gpgSignKey = gpgPrivateKey.replace(" ", "\n")
+        useInMemoryPgpKeys(gpgSignKey, gpgPassphrase)
+        sign(publishing.publications.getByName("mavenJava"))
+    }
 }
 
 tasks.jar {
