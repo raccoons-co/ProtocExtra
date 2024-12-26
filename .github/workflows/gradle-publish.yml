@@ -20,11 +20,11 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 11
-          distribution: temurin
+          distribution: liberica
           server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_USERNAME
-          gpg-private-key: GPG_PRIVATE_KEY
+          gpg-private-key: ${{ secrets.GPG_SIGN_KEY }}
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Setup Gradle
@@ -34,6 +34,6 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_TOKEN_USERNAME }}
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_SIGNING_KEY }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_SIGN_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_SIGN_KEY_PASSPHRASE }}
 

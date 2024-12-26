@@ -40,7 +40,8 @@ publishing {
             pom {
                 name.set("${project.group}:${artifactId}")
                 description.set("The library that simplifies developing " +
-                        "of Protocol Buffers Compiler Plugin")
+                            "of Protocol Buffers Compiler Plugin"
+                )
                 url.set("https://github.com/raccoons-co/ProtocExtra")
                 licenses {
                     license {
@@ -83,7 +84,8 @@ java {
 
 signing {
     useGpgCmd()
-    sign(publishing.publications.getByName("mavenJava"))
+    sign(publishing.publications["mavenJava"])
+//    sign(publishing.publications.getByName("mavenJava"))
 //    sign(configurations.runtimeElements.get())
 }
 
