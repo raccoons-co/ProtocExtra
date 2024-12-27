@@ -31,7 +31,7 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_SIGN_KEY_PASSPHRASE }}
       - run: ./gradlew :plugin:build
       - run: ./gradlew jacocoTestReport
-        -
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         env:
