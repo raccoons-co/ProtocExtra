@@ -83,7 +83,7 @@ java {
 }
 
 signing {
-    val gpgPrivateKey: String? = System.getenv("GPG_PRIVATE_KEY")
+    val gpgPrivateKey: String? = System.getenv("GRADLE_GPG_PRIVATE_KEY")
     val gpgPassphrase: String? = System.getenv("GPG_PASSPHRASE")
     if (gpgPrivateKey != null && gpgPassphrase != null) {
         val gpgSignKey = gpgPrivateKey.replace(" ", "\n")

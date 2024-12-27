@@ -1,4 +1,4 @@
-name: Publish
+name: Publish to GitHub Packages
 
 on:
   release:
@@ -23,17 +23,13 @@ jobs:
           distribution: liberica
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
-      - name: Build with Gradle
-        run: ./gradlew :api:build
-
-      - name: Publish to GitHub Packages
-        run: ./gradlew :api:publish
+      - run: ./gradlew :api:build
+      - run: ./gradlew :api:publish
         env:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_SIGN_KEY }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_SIGN_KEY_PASSPHRASE }}
+          GPG_PRIVATE_KEY: ${{ secrets.GRADLE_GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
