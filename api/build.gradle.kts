@@ -40,8 +40,7 @@ publishing {
             pom {
                 name.set("${project.group}:${artifactId}")
                 description.set(
-                    "The library that simplifies developing " +
-                            "of Protocol Buffers Compiler Plugin"
+                    "The library that simplifies developing of Protocol Buffers Compiler Plugin"
                 )
                 url.set("https://github.com/raccoons-co/ProtocExtra")
                 licenses {
@@ -68,13 +67,11 @@ publishing {
     }
     repositories {
         maven {
-            name = "OSSRH"
-            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/raccoons-co/ProtocExtra")
             credentials {
-//                username = System.getenv("MAVEN_USERNAME")
-//                password = System.getenv("MAVEN_PASSWORD")
-                username = "00eb8gO8"
-                password = "7AyT1v2+LVT0dwbEzSZ+wh0aAd1o3sPfKSwr6IFqu6m5"
+                username = System.getenv("GITHUB_USERNAME")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
