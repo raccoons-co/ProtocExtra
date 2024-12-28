@@ -31,5 +31,8 @@ jobs:
         env:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The PGP private key must DO NOT contain BEGIN/END markers to be
+          # successfully applied by `useInMemoryPgpKeys(...)` signing method.
+          # @See api/gradle.build.kts#signing
           GPG_PRIVATE_KEY: ${{ secrets.GRADLE_GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

@@ -21,12 +21,14 @@ jobs:
           server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
+          # The PGP private key must contain BEGIN/END markers to be successfully imported
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           gpg-passphrase: GPG_PASSPHRASE
 
       - run: mvn versions:set -DnewVersion=${{ github.event.release.tag_name }}
       - run: mvn -P release --batch-mode deploy -DskipTests
         env:
+          # User tokens for the Central Portal use a different token system than OSSRH tokens
           MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_TOKEN_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
