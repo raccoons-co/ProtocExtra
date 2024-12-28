@@ -13,9 +13,6 @@ plugins {
 }
 
 protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.25.5"
-    }
     plugins {
         id("extra") {
             path = "util/plugin.sh"

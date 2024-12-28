@@ -26,7 +26,7 @@ checkstyle {
 
 subprojects {
     group = "co.raccoons.protoc"
-    version = "0.0.13"
+    version = "0.0.14"
 
     setOf(
         "java",
@@ -50,6 +50,12 @@ subprojects {
         ).forEach { testImplementation(it) }
 
         errorprone("com.google.errorprone:error_prone_core:2.31.0")
+    }
+
+    protobuf {
+        protoc {
+            artifact = "com.google.protobuf:protoc:3.25.5"
+        }
     }
 
     tasks {
