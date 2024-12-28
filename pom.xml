@@ -9,7 +9,7 @@
     <version>0.0.13</version>
     <packaging>jar</packaging>
 
-    <name>co.raccoons.proto:protoc</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>The library that simplifies developing of Protocol Buffers Compiler Plugin</description>
     <url>https://github.com/raccoons-co/ProtocExtra</url>
 
@@ -35,6 +35,21 @@
         <url>https://github.com/raccoons-co/ProtocExtra/tree/master</url>
     </scm>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>4.28.3</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.4.0-jre</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
     <profiles>
         <profile>
             <id>release</id>
@@ -43,7 +58,7 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.4.0</version>
+                        <version>0.6.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
@@ -54,7 +69,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>3.3.0</version>
+                        <version>3.3.1</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -68,7 +83,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.6.3</version>
+                        <version>3.11.2</version>
                         <executions>
                             <execution>
                                 <id>attach-javadoc</id>
@@ -85,7 +100,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.1.0</version>
+                        <version>3.2.7</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
