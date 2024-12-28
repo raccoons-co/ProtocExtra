@@ -1,7 +1,7 @@
 /*
  * Copyright 2024, Raccoons. Developing simple way to change.
  *
- * @license MIT
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
 import net.ltgt.gradle.errorprone.errorprone
@@ -26,7 +26,7 @@ checkstyle {
 
 subprojects {
     group = "co.raccoons.protoc"
-    version = "0.0.14"
+    version = parent?.version ?: "0.0.15-SNAPSHOT" // Will be overridden by ${{ github.event.release.tag_name }}
 
     setOf(
         "java",

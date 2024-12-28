@@ -1,6 +1,6 @@
 // Copyright 2024, Raccoons. Developing simple way to change.
 //
-// @license MIT
+// @license http://www.apache.org/licenses/LICENSE-2.0
 
 syntax = "proto3";
 

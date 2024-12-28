@@ -1,7 +1,7 @@
 /*
  * Copyright 2024, Raccoons. Developing simple way to change.
  *
- * @license MIT
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
 import com.google.protobuf.gradle.id
@@ -42,8 +42,8 @@ publishing {
                 url.set("https://github.com/raccoons-co/ProtocExtra")
                 licenses {
                     license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/license/mit")
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0")
                     }
                 }
                 developers {

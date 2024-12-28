@@ -1,7 +1,8 @@
-[![GitHub Actions](https://github.com/raccoons-co/ProtocExtra/actions/workflows/gradle-build-multiproject.yml/badge.svg)](https://github.com/raccoons-co/ProtocExtra/actions)
-[![codecov](https://codecov.io/gh/raccoons-co/ProtocExtra/graph/badge.svg?token=y9xaNeJ4Lz)](https://codecov.io/gh/raccoons-co/ProtocExtra)
+[![Build Status](https://github.com/raccoons-co/ProtocExtra/actions/workflows/gradle-build-multiproject.yml/badge.svg)](https://github.com/raccoons-co/ProtocExtra/actions)
+[![Publish to Maven Central](https://github.com/raccoons-co/ProtocExtra/actions/workflows/gradle-publish-maven-central.yml/badge.svg)](https://central.sonatype.com/namespace/co.raccoons.protoc)
+[![Codecov](https://codecov.io/gh/raccoons-co/ProtocExtra/graph/badge.svg?token=y9xaNeJ4Lz)](https://codecov.io/gh/raccoons-co/ProtocExtra)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=raccoons-co_ProtocExtra&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=raccoons-co_ProtocExtra)
-[![GitHub Actions](https://github.com/raccoons-co/ProtocExtra/actions/workflows/gradle-publish-maven-central.yml/badge.svg)](https://central.sonatype.com/namespace/co.raccoons.protoc)
+[![License](https://img.shields.io/badge/License-Apache%20License%202.0-informational.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
 # Developing Java Protobuf Compiler Plugin
 

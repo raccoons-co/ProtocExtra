@@ -6,17 +6,17 @@
 
     <groupId>co.raccoons.protoc</groupId>
     <artifactId>protoc-extra-api</artifactId>
-    <version>0.0.13</version>
+    <version>abstract</version> <!--Will be overridden with ${{ github.event.release.tag_name }} -->
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>The library that simplifies developing of Protocol Buffers Compiler Plugin</description>
+    <description>The library that simplifies developing of Protocol Buffers Compiler Plugin.</description>
     <url>https://github.com/raccoons-co/ProtocExtra</url>
 
     <licenses>
         <license>
-            <name>MIT License</name>
-            <url>https://opensource.org/license/mit</url>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
 
@@ -62,7 +62,6 @@
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
-                            <tokenAuth>true</tokenAuth>
                             <autoPublish>true</autoPublish>
                         </configuration>
                     </plugin>
