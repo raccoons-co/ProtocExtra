@@ -1,14 +1,20 @@
-[![GitHub Actions](https://github.com/raccoons-co/ProtocExtra/actions/workflows/maven.yml/badge.svg)](https://github.com/raccoons-co/jru-telegrambot/actions)
-[![codecov](https://codecov.io/gh/raccoons-co/ProtocExtra/graph/badge.svg?token=y9xaNeJ4Lz)](https://codecov.io/gh/raccoons-co/abstract-protobuf-plugin)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=raccoons-co_ProtocExtra&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=raccoons-co_abstract-protobuf-plugin)
+[![GitHub Actions](https://github.com/raccoons-co/ProtocExtra/actions/workflows/gradle-build-multiproject.yml/badge.svg)](https://github.com/raccoons-co/ProtocExtra/actions)
+[![codecov](https://codecov.io/gh/raccoons-co/ProtocExtra/graph/badge.svg?token=y9xaNeJ4Lz)](https://codecov.io/gh/raccoons-co/ProtocExtra)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=raccoons-co_ProtocExtra&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=raccoons-co_ProtocExtra)
+[![GitHub Actions](https://github.com/raccoons-co/ProtocExtra/actions/workflows/gradle-publish-maven-central.yml/badge.svg)](https://central.sonatype.com/namespace/co.raccoons.protoc)
 
 # Developing Java Protobuf Compiler Plugin
+
+Let's simplify creation of Protocol Buffers Compiler Plugin:
+
+1. Implement `AbstractProtocPlugin`.
+2. Implement `AbstractCodeGenerator`.
+3. Apply Plugin Executable with *Gradle* or *protoc* cli.
 
 ### Abstract Protoc Plugin
 ___
 
-Let's simplify creation of Protobuf Compiler Plugin with using the
-`AbstractProtocPlugin`. This class has skeletal implementation to handle
+The `AbstractProtocPlugin` class has skeletal implementation to handle
 plugins' standard input and output streams.
 
 To introduce a concrete plugin the programmer must extend `AbstractProtocPlugin`
@@ -128,16 +134,38 @@ the initial file and the one which inserts into it must both run as part of
 a single invocation of protoc. Code generators are executed in the order in 
 which they appear on the command line.
 
-The example of usage in the `Makefile` is given below:
-
+The examples of usage are given below:
+~~~ Kotlin
+// gradle.build.kts
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.25.5"
+    }
+    plugins {
+        id("extra") {
+            path = "util/plugin.sh"
+        }
+    }
+    generateProtoTasks {
+        ofSourceSet("main").forEach {
+            it.plugins {
+                id("extra") {
+                    outputSubDir = "java"
+                }
+            }
+        }
+    }
+}
+~~~
 ~~~ Makefile
+# Makefile
 proto: clean $(GENERATED_OUT_DIR)
 proto: PROTO_PATH = ./src/main/proto
 proto:
     protoc \
         --java_out=$(GENERATED_OUT_DIR) \
-        --plugin=protoc-gen-example=./plugin.sh \
-        --example_out=$(GENERATED_OUT_DIR) \
+        --plugin=protoc-gen-extra=./util/plugin.sh \
+        --extra_out=$(GENERATED_OUT_DIR) \
         --proto_path=$(PROTO_PATH) \
         $(wildcard $(PROTO_PATH)/*.proto)
 ~~~

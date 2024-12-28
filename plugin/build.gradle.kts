@@ -1,11 +1,8 @@
 dependencies {
-    implementation("co.raccoons.protoc:protoc-extra-api:0.0.11")
+    implementation("co.raccoons.protoc:protoc-extra-api:${project.version}")
 }
 
 protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.25.5"
-    }
     generateProtoTasks {
         ofSourceSet("main")
     }
