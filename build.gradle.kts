@@ -26,7 +26,7 @@ checkstyle {
 
 subprojects {
     group = "co.raccoons.protoc"
-    version = parent?.version ?: "0.0.15-SNAPSHOT" // Will be overridden by ${{ github.event.release.tag_name }}
+    version = rootProject.version // Will be overridden by ${{ github.event.release.tag_name }}
 
     setOf(
         "java",
