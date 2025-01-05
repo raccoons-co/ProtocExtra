@@ -12,7 +12,16 @@
     <name>${project.groupId}:${project.artifactId}</name>
     <description>The library that simplifies developing of Protocol Buffers Compiler Plugin.</description>
     <url>https://github.com/raccoons-co/ProtocExtra</url>
-
+    <organization>
+        <name>Raccoons</name>
+        <url>https://github.com/raccoons-co</url>
+    </organization>
+    <contributors>
+        <contributor>
+            <name>iselo</name>
+            <email>iselo@raccoons.com</email>
+        </contributor>
+    </contributors>
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
